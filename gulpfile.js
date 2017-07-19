@@ -9,7 +9,7 @@ const shell = require('gulp-shell');
 
 gulp.task('instrument', function() {
     return gulp.src(['src/**/*.js'])
-    .pipe(istanbul())
+    .pipe(istanbul({includeUntested: true}))
     .pipe(istanbul.hookRequire());
 });
 
@@ -64,8 +64,10 @@ gulp.task('test', ['lint-test', 'instrument'], function() {
     .pipe(mocha())
     .pipe(istanbul.writeReports())
     .pipe(istanbul.enforceThresholds({thresholds: { global: {
-        statements: 70,
-        branches: 50
+        statements: 30,
+        branches: 20,
+        functions: 20,
+        lines: 30
     } }}));
 });
 

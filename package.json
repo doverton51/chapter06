@@ -21,7 +21,7 @@
     "gulp-env": "^0.4.0",
     "gulp-eslint": "^4.0.0",
     "gulp-istanbul": "^1.1.2",
-    "gulp-mocha": "^3.0.1",
+    "gulp-mocha": "3.0.1",
     "gulp-shell": "^0.6.3",
     "mocha": "^2.4.5",
     "phantomjs-prebuilt": "^2.1.7",
