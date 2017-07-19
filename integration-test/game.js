@@ -1,9 +1,9 @@
 (function() {
     'use strict';
-
     var expect = require('chai').expect;
     var page = require('webpage').create();
-    var rootUrl = 'http://localhost:3000';
+    var rootUrl = 'http://localhost:' + 
+    require('system').env.TEST_PORT || 3000;
     
     withGame('Example', function() {
         expect(getText('#word')).to.equal('_______');
@@ -30,7 +30,7 @@
     
     function withGame(word, callback) {
         page.open(rootUrl + '/', function() {
-            'use strict';
+            
             page.evaluateAsync(function(w) {
                 $('input[name=word]').val(w);
                 $('form#createGame').submit();
@@ -67,7 +67,7 @@
                 console.log('Test failed!');
                 handleError(e.message);
             }
-        }
+        };
     }
     
     function handleError(message) {
