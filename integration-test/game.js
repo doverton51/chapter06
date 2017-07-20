@@ -5,6 +5,8 @@
     var rootUrl = 'http://localhost:' + 
     require('system').env.TEST_PORT || 3000;
     
+    console.log('Root URL: ' + rootUrl);
+
     withGame('Example', function() {
         expect(getText('#word')).to.equal('_______');
          

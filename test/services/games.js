@@ -1,11 +1,12 @@
 'use strict';
 
 const expect = require('chai').expect;
+const uuid = require('uuid');
 let service = require('../../src/services/games.js');
 
 describe('Game service', () => {
-    const firstUserId = 'user-id-1';
-    const secondUserId = 'user-id-2';
+    const firstUserId = uuid.v4();
+    const secondUserId = uuid.v4();
 
     before(done => {
         var d = (err) => {
