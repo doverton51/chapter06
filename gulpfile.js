@@ -75,8 +75,16 @@ gulp.task('integration-test', ['lint-integrationtest'], (done) => {
     const TEST_PORT=5000;
 
     require('./src/config/mongoose.js').then((mongoose) => {
+        var d = (err) => {
+            console.log("DONE: " + err);
+            if(err) {
+                done(err)
+            } else {
+                done();
+            }
+        }
         let server, teardown = (error) => {
-            server.close(() => mongoose.disconnect(() => done(error)));
+            server.close(() => mongoose.disconnect(() => d(error)));
         };
 
         server = require('http')

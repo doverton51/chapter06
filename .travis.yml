@@ -6,7 +6,7 @@ env:
 language: node_js
 before_script:
 - npm install -g gulp
-script: gulp default
+script: gulp default integration-test
 node_js:
 - 6
 - 4
