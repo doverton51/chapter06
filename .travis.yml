@@ -1,8 +1,10 @@
 services:
   - mongodb
+  - redis-server
 env:
   global:
     - MONGODB_URL=mongodb://localhost/hangman
+    - REDIS_URL=redis://127.0.01:6379/
 language: node_js
 before_script:
   - npm install -g gulp

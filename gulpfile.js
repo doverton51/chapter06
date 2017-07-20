@@ -8,7 +8,7 @@ const istanbul = require('gulp-istanbul');
 const shell = require('gulp-shell');
 
 gulp.task('instrument', function() {
-    return gulp.src(['src/**/*.js'])
+    return gulp.src(['src/**/*.js', '!src/public/vendor/*.js'])
     .pipe(istanbul({includeUntested: true}))
     .pipe(istanbul.hookRequire());
 });
@@ -86,6 +86,9 @@ gulp.task('integration-test', ['default'], (done) => {
         let server, teardown = (error) => {
             if(!tornDown) {
                 tornDown = true;
+
+                require('./src/config/redis.js').quit();
+
                 server.close(() => mongoose.disconnect(() => d(error)));
             }
         };

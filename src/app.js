@@ -9,9 +9,11 @@ module.exports = (mongoose) => {
   var bodyParser = require('body-parser');
 
   let gamesService = require('./services/games')(mongoose);
+  let usersService = require('./services/users');
   var users = require('./middleware/users');
-  var routes = require('./routes/index')(gamesService);
-  var games = require('./routes/games')(gamesService);
+  var routes = require('./routes/index')(gamesService, usersService);
+  var games = require('./routes/games')(gamesService, usersService);
+  let profile = require('./routes/profile')(usersService);
 
   var app = express();
 
@@ -32,6 +34,7 @@ module.exports = (mongoose) => {
   app.use(users);
   app.use('/', routes);
   app.use('/games', games);
+  app.use('/profile', profile);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
