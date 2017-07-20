@@ -11,6 +11,7 @@
     "debug": "~2.2.0",
     "express": "~4.13.1",
     "hjs": "~0.0.6",
+    "mongoose": "^4.11.3",
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
     "uuid": "^2.0.2"
@@ -24,8 +25,9 @@
     "gulp-mocha": "3.0.1",
     "gulp-shell": "^0.6.3",
     "mocha": "^2.4.5",
+    "mockgoose": "^5.4.1",
     "phantomjs-prebuilt": "^2.1.7",
     "sinon": "^1.17.4",
-    "supertest": "^1.2.0"
+    "supertest": "^3.0.0"
   }
 }

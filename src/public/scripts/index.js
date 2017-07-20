@@ -9,7 +9,7 @@ $(function() {
         event.preventDefault();
     });
 
-    $('#createdGames').on('click', '.delete', function() {
+    $('#createdGames').on('click', '.delete', function(event) {
         var $this = $(this);
         $.ajax($this.attr('href'), {
             method: 'delete'

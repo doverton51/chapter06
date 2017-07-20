@@ -1,3 +1,8 @@
+services:
+ - mongodb
+ env:
+  global:
+    - MONGODB_URL=mongodb://localhost/hangman
 language: node_js
 before_script:
  - npm install -g gulp

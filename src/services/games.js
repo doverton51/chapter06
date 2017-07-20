@@ -1,41 +1,34 @@
 ﻿'use strict';
+module.exports = (mongoose) => {
+    let Game = mongoose.models['Game'];
 
-const games = [];
-let nextId = 1;
+    if(!Game) {
+        const Schema = mongoose.Schema;
+        const gameSchema = new Schema({
+            word: String,
+            setBy: String
+        });
 
-class Game {
-    constructor(id, setBy, word) {
-        this.id = id;
-        this.setBy = setBy;
-        this.word = word.toUpperCase();
-    }
-    
-    positionsOf(character) {
-        let positions = [];
-        for (let i in this.word) {
-            if (this.word[i] === character.toUpperCase()) {
-                positions.push(i);
+        gameSchema.methods.positionsOf = function(character) {
+            let positions = [];
+            for (let i in this.word) {
+                if (this.word[i] === character.toUpperCase()) {
+                    positions.push(i);
+                }
             }
-        }
-        return positions;
-    }
-    
-    remove() {
-        games.splice(games.indexOf(this), 1);
-    }
-}
+            return positions;
+        };            
 
-module.exports.create = (userId, word) => {
-    const newGame = new Game(nextId++, userId, word); 
-    games.push(newGame);
-    return newGame;
+        Game = mongoose.model('Game', gameSchema);
+    }
+
+    return {
+        availableTo: (userId) => Game.find({setBy: {$ne: userId}}),
+        create: (userId, word) => {
+            const game = new Game({setBy: userId, word: word.toUpperCase()});
+            return game.save();
+        },
+        createdBy: (userId) => Game.find({setBy: userId}),
+        get: (id) => Game.findById(id)
+    };
 };
-
-module.exports.get =
-  (id) => games.find(game => game.id === parseInt(id, 10));
-
-module.exports.createdBy =
-  (userId) => games.filter(game => game.setBy === userId);
-
-module.exports.availableTo =
-  (userId) => games.filter(game => game.setBy !== userId);
