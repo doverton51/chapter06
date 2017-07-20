@@ -37,7 +37,10 @@ gulp.task('lint-client', function() {
 gulp.task('lint-test', function() {
     return gulp.src('test/**/*.js')
         .pipe(eslint({
-            envs: ['es6', 'node', 'mocha']
+            envs: ['es6', 'node', 'mocha'],
+            rules: {
+                'no-console': 0
+            }
         }))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());

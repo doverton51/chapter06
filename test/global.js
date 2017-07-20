@@ -2,5 +2,8 @@
 
 after(function(done) {
     require('../src/config/mongoose.js')
-    .then((mongoose) => mongoose.disconnect(done));
+    .then((mongoose) => {
+        console.log('Closing DB Connection');
+        mongoose.disconnect(done);
+    });
 });
