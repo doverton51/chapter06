@@ -65,15 +65,37 @@
                 expectations();
             } catch(e) {
                 console.log('Test failed!');
-                handleError(e.message);
+                console.log(e);
+                throw e;
             }
         };
     }
     
-    function handleError(message) {
-        console.log(message);
-        phantom.exit(1);
+    page.onConsoleMessage = function(msg, lineNum, sourceId) {
+        console.log('CONSOLE: ' + msg + ' (from line #' + lineNum + ' in "' + sourceId + '")');
+    };
+
+    // http://phantomjs.org/api/webpage/handler/on-error.html
+    page.onError = function(msg, trace) {
+    var msgStack = ['ERROR: ' + msg];
+    if (trace && trace.length) {
+        msgStack.push('TRACE:');
+        trace.forEach(function(t) {
+        msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function +'")' : ''));
+        });
     }
-    
-    phantom.onError = page.onError = handleError;
+
+    console.error(msgStack.join('\n'));
+    };
+
+    // http://phantomjs.org/api/webpage/handler/on-resource-error.html
+    page.onResourceError = function(resourceError) {
+    console.log('Unable to load resource (#' + resourceError.id + ' URL:' + resourceError.url + ')');
+    console.log('Error code: ' + resourceError.errorCode + '. Description: ' + resourceError.errorString);
+    };
+
+    // http://phantomjs.org/api/webpage/handler/on-resource-timeout.html
+    page.onResourceTimeout = function(request) {
+        console.log('Response Timeout (#' + request.id + '): ' + JSON.stringify(request));
+    };
 }());

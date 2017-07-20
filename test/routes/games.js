@@ -2,8 +2,8 @@
 
 const request = require('supertest');
 const expect = require('chai').expect;
-
-const userId = 'test-user-id';
+const uuid = require('uuid');
+const userId = uuid.v4();
 
 describe('/games', () => {
     let agent;
@@ -68,7 +68,7 @@ describe('/games', () => {
                     done();
                 }
             };
-            gamesService.create('another-user-id', 'test')
+            gamesService.create(uuid.v4(), 'test')
                 .then(game => { agent
                     .delete('/games/' + game.id)
                     .set('Cookie', ['userId=' + userId])
