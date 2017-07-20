@@ -23,7 +23,7 @@
             page.onCallback = verify(function() {
                 expect(getText('#word')).to.equal('E_____E');
                 expect(getText('#missedLetters')).to.equal('T');
-                
+
                 console.log('Test completed successfully!');
                 phantom.exit();
             });

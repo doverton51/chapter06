@@ -71,7 +71,7 @@ gulp.task('test', ['instrument'], function() {
 gulp.task('lint', ['lint-server', 'lint-client', 
                     'lint-test', 'lint-integrationtest']);
 
-gulp.task('integration-test', ['lint-integrationtest'], (done) => {
+gulp.task('integration-test', ['default'], (done) => {
     const TEST_PORT=5000;
     let tornDown = false;
     require('./src/config/mongoose.js').then((mongoose) => {
@@ -104,3 +104,5 @@ gulp.task('integration-test', ['lint-integrationtest'], (done) => {
 });
 
 gulp.task('default', ['lint', 'test']);
+
+gulp.task('travis', ['default', 'integration-test'])
