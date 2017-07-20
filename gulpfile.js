@@ -73,7 +73,7 @@ gulp.task('lint', ['lint-server', 'lint-client',
 
 gulp.task('integration-test', ['lint-integrationtest'], (done) => {
     const TEST_PORT=5000;
-
+    let tornDown = false;
     require('./src/config/mongoose.js').then((mongoose) => {
         var d = (err) => {
             console.log("DONE: " + err);
@@ -84,7 +84,10 @@ gulp.task('integration-test', ['lint-integrationtest'], (done) => {
             }
         }
         let server, teardown = (error) => {
-            server.close(() => mongoose.disconnect(() => d(error)));
+            if(!tornDown) {
+                tornDown = true;
+                server.close(() => mongoose.disconnect(() => d(error)));
+            }
         };
 
         server = require('http')
