@@ -26,7 +26,7 @@ gulp.task('lint-server', function() {
 });
 
 gulp.task('lint-client', function() {
-    return gulp.src('src/public/**/*.js')
+    return gulp.src(['src/public/**/*.js', '!src/public/vendor/*.js'])
         .pipe(eslint({
             envs: ['browser', 'jquery']
         }))
